@@ -6,6 +6,7 @@ import DetailPage from './components/page/DetailPage';
 function App(){
   
   const [alertVisibility, setAlertVisibility] = useState(false);
+  const [detailIdCharacter, setDetailIdCharacter] = useState(-1);
   return (
     <>
     <BrowserRouter >

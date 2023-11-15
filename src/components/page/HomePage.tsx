@@ -5,8 +5,7 @@ import { useQuery, gql } from '@apollo/client'
 import Pagination from '../Pagination';
 const HomePage = () => {
     const [currentPage,setCurrentPage] = useState(1);
-    
-    let GET_LOCATIONS = gql`
+    let GET_CHARACTERS = gql`
         query Char1($page: Int){
             characters(page: $page){
                 info {
@@ -23,11 +22,9 @@ const HomePage = () => {
             }
         }
         `;
-    const { loading, error, data,fetchMore } = useQuery(GET_LOCATIONS,{
+    const { loading, error, data,fetchMore } = useQuery(GET_CHARACTERS,{
         variables:{currentPage}
     });
-    console.log("Page: "+currentPage);
-    console.log(data);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
     
