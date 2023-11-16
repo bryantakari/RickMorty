@@ -3,8 +3,16 @@ import {useState}from 'react'
 import ListGroup from '../ListGroup'
 import { useQuery, gql } from '@apollo/client'
 import Pagination from '../Pagination';
-const HomePage = () => {
+import {useNavigate } from 'react-router-dom';
+
+interface HomePageProp{
+    charNamePass : (name:string) => void;
+
+}
+
+const HomePage = ({charNamePass}: HomePageProp) => {
     const [currentPage,setCurrentPage] = useState(1);
+    const navigate = useNavigate();
     let GET_CHARACTERS = gql`
         query Char1($page: Int){
             characters(page: $page){
@@ -61,19 +69,23 @@ const HomePage = () => {
         
         setCurrentPage(destinationPage);
     }
+    const navigateLocationPage = ()=>{
+       
+        navigate('/location-list');
+
+   }
+
+   const charNamePassing = (name:string)=>{
+        charNamePass(name);
+   }
   return (
     <>
     <div className='bg-dark text-light p-2'><h1 className='text-center'>Home Page</h1></div>
     
     <div className="container">
-        <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Search Characters Name" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
-            <div className="input-group-append">
-                <button className="btn btn-outline-secondary" type="button" onClick={()=>{console.log()}}>Button</button>
-            </div>
-        </div>
+        <button className="btn btn-outline-secondary" type="button" onClick={()=>navigateLocationPage()}>Go To Location List</button>
         <div className='row'>
-            <ListGroup characters={data.characters.results}/>
+            <ListGroup charNamePass={charNamePassing} characters={data.characters.results}/>
         </div>
 
         <Pagination onNavigatePrecise={navigatePagePrecise} onNavigate={navigatePage} onNavigatePrev={navigatePagePrev} count={data.characters.info.count} page={data.characters.info.pages} next={data.characters.info.next} prev={data.characters.info.prev}/>

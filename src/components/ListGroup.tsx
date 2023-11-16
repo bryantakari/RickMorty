@@ -1,16 +1,14 @@
-import {Fragment, useState} from "react";
-import { useQuery, gql } from '@apollo/client';
-import Character from "./object/Character";
 import { useNavigate } from "react-router-dom";
 
 interface ListGroupProps{
     characters: [];
+    charNamePass: (name:string)=> void;
 }
 
-function ListGroup({characters}: ListGroupProps){
+function ListGroup({characters,charNamePass}: ListGroupProps){
     const navigate = useNavigate();
    const navigateDetailPage = (idChar:number,charName:string)=>{
-       
+        charNamePass(charName);
         navigate('/detail',{state:{id:idChar,name:charName}});
 
    }
