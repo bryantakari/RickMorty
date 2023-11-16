@@ -46,8 +46,12 @@ const DetailPage = ({charName} : DetailPageProp) => {
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
+    const localChar = localStorage.getItem(charName);
     
-    const detailChar = (localStorage.getItem(charName))?JSON.parse(localStorage.getItem(charName)):data.characters.results[0];
+    let detailChar = data.characters.results[0];
+    if(localChar){
+      detailChar = JSON.parse(localChar);
+    }
     console.log(detailChar);
     console.log(charName);
     localStorage.setItem(charName,JSON.stringify(detailChar));
@@ -124,7 +128,7 @@ const DetailPage = ({charName} : DetailPageProp) => {
               </div>
               <div className='row'>
                 <div className="col">
-                  <p>{detailChar.episode.map((item) => (item.episode+', '))}</p>
+                  <p>{detailChar.episode.map(({item}) => (item.episode+', '))}</p>
                 </div>
                 
               </div>
